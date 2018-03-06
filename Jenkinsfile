@@ -1,11 +1,11 @@
 pipeline {
   agent any
   stages {
-    stage('Branch1') {
+    stage('Code') {
       parallel {
-        stage('CommitCode To GIT') {
+        stage('Clone code from git') {
           steps {
-            echo 'Commit code'
+            echo 'Clone code'
           }
         }
         stage('SonarQube') {
@@ -13,6 +13,10 @@ pipeline {
             echo 'Scan code via SOnarQube'
           }
         }
+      }
+    }
+    stage('Build') {
+      parallel {
         stage('Build APK') {
           steps {
             echo 'Build APK File'
@@ -23,16 +27,16 @@ pipeline {
             echo 'Install apk file to mobile'
           }
         }
-        stage('Test') {
-          steps {
-            echo 'Test Feature via robot script'
-          }
-        }
       }
     }
-    stage('Branch2') {
+    stage('Test') {
       steps {
-        echo 'Prod ENV.'
+        echo 'Test Feature via robot script'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Deploy code to other ENV.'
       }
     }
   }

@@ -32,6 +32,7 @@ pipeline {
     stage('Test') {
       steps {
         echo 'Test Feature via robot script'
+        build 'TestStage'
       }
     }
     stage('Deploy') {
